@@ -17,8 +17,12 @@ function isGeneratorResult(next) {
 function isPromise(next) {
 	return next!==null&&"object"===typeof next&&"function"===typeof next.then&&"function"===typeof next['catch'];
 }
-const defaultStore = {
+
+function isError(next) {
+  return next instanceof Error;
 }
+
+const defaultStore = {}
 module.exports = function run(next, store, previousNext) {
   if ("object"!==typeof store) store = defaultStore;
   if (isFunction(next)) {
@@ -34,7 +38,12 @@ module.exports = function run(next, store, previousNext) {
         return run(next.value, store)
         .then(function(value) {
           try {
-            return run(previousNext.next(value), store, previousNext);
+            let nextValue = previousNext.next(value);
+            if (!nextValue.done) {
+              return run(nextValue, store, previousNext);
+            } else {
+              return Promise.resolve(value);
+            }
           } catch(e) {
             return Promise.reject(e);
           }
@@ -45,7 +54,8 @@ module.exports = function run(next, store, previousNext) {
     } else if (isGenerator(next)) {
       // Means it is generator
       try {
-        return run(next.next(), store, next);
+        let value = next.next();
+        return run(value, store, next);
       } catch(e) {
         return Promise.reject(e);
       }
