@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/morulus/dron-run/issues"
   },
-  "homepage": "https://github.com/morulus/dron-run#readme"
+  "homepage": "https://github.com/morulus/dron-run#readme",
+  "dependencies": {
+    "is-generator": "^1.0.3"
+  }
 }

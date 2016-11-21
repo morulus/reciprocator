@@ -17,8 +17,10 @@ function isGeneratorResult(next) {
 function isPromise(next) {
 	return next!==null&&"object"===typeof next&&"function"===typeof next.then&&"function"===typeof next['catch'];
 }
-
-module.exports = function run(next, store = {}, previousNext = null) {
+const defaultStore = {
+}
+module.exports = function run(next, store, previousNext) {
+  if ("object"!==typeof store) store = defaultStore;
   if (isFunction(next)) {
     try {
       return run(next(store), store);
