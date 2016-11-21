@@ -1,0 +1,24 @@
+{
+  "name": "dron-run",
+  "version": "0.1.0",
+  "description": "Loopback function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morulus/dron-run.git"
+  },
+  "keywords": [
+    "dron",
+    "dron-run",
+    "loopback"
+  ],
+  "author": "Vladimir Kalmykov <vladimirmorulus@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/morulus/dron-run/issues"
+  },
+  "homepage": "https://github.com/morulus/dron-run#readme"
+}
