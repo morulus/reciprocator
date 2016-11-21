@@ -1,5 +1,5 @@
 {
-  "name": "dron-run",
+  "name": "loopback-run",
   "version": "0.1.0",
   "description": "Loopback function",
   "main": "index.js",
