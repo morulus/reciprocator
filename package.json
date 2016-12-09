@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/morulus/dron-run.git"
+    "url": "git+https://github.com/morulus/reciprocator.git"
   },
   "keywords": [
     "dron",
@@ -18,9 +18,9 @@
   "author": "Vladimir Kalmykov <vladimirmorulus@gmail.com>",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/morulus/dron-run/issues"
+    "url": "https://github.com/morulus/reciprocator/issues"
   },
-  "homepage": "https://github.com/morulus/dron-run#readme",
+  "homepage": "https://github.com/morulus/reciprocator#readme",
   "dependencies": {
     "is-generator": "^1.0.3"
   },
