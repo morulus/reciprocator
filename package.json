@@ -1,6 +1,6 @@
 {
   "name": "reciprocator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Reflexive extractor for functions and generators",
   "main": "index.js",
   "scripts": {
