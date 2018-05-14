@@ -1,0 +1,251 @@
+{
+    env: {
+        es6: true,
+        node: true
+    },
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: module,
+        ecmaFeatures: {
+            jsx: true,
+            experimentalObjectRestSpread: true
+        }
+    },
+    extends: eslint:recommended,
+    rules: {
+        accessor-pairs: 2,
+        array-bracket-newline: 2,
+        array-element-newline: 2,
+        arrow-body-style: 2,
+        arrow-spacing: 2,
+        block-scoped-var: 2,
+        block-spacing: 2,
+        brace-style: 2,
+        camelcase: 2,
+        class-methods-use-this: 2,
+        comma-dangle: 2,
+        comma-spacing: 2,
+        comma-style: 2,
+        complexity: 0,
+        computed-property-spacing: 2,
+        consistent-this: 2,
+        curly: 2,
+        default-case: 2,
+        dot-notation: 2,
+        eol-last: 2,
+        eqeqeq: 2,
+        for-direction: 2,
+        func-call-spacing: 2,
+        func-name-matching: 0,
+        function-paren-newline: 2,
+        generator-star-spacing: 2,
+        getter-return: 2,
+        guard-for-in: 2,
+        handle-callback-err: 2,
+        id-blacklist: 2,
+        id-match: 2,
+        jsx-quotes: 2,
+        key-spacing: 2,
+        keyword-spacing: 2,
+        line-comment-position: 2,
+        linebreak-style: [
+            2,
+            unix
+        ],
+        lines-around-directive: 2,
+        lines-between-class-members: 2,
+        max-depth: 2,
+        max-lines: 2,
+        max-nested-callbacks: 2,
+        max-params: 2,
+        max-statements: 0,
+        max-statements-per-line: 2,
+        multiline-comment-style: [
+            2,
+            starred-block
+        ],
+        new-cap: 2,
+        new-parens: 2,
+        newline-after-var: 2,
+        newline-before-return: 2,
+        newline-per-chained-call: 2,
+        no-alert: 2,
+        no-array-constructor: 2,
+        no-await-in-loop: 2,
+        no-bitwise: 2,
+        no-buffer-constructor: 2,
+        no-caller: 2,
+        no-continue: 2,
+        no-div-regex: 2,
+        no-duplicate-imports: 2,
+        no-else-return: 2,
+        no-empty-function: 2,
+        no-eq-null: 2,
+        no-eval: 2,
+        no-extend-native: 2,
+        no-extra-bind: 2,
+        no-extra-label: 2,
+        no-floating-decimal: 2,
+        no-implicit-coercion: 2,
+        no-implicit-globals: 2,
+        no-implied-eval: 2,
+        no-inline-comments: 2,
+        no-iterator: 2,
+        no-label-var: 2,
+        no-labels: 2,
+        no-lone-blocks: 2,
+        no-lonely-if: 2,
+        no-loop-func: 2,
+        no-mixed-operators: 2,
+        no-mixed-requires: 2,
+        no-multi-assign: 2,
+        no-multi-str: 2,
+        no-multiple-empty-lines: 2,
+        no-native-reassign: 2,
+        no-negated-condition: 2,
+        no-negated-in-lhs: 2,
+        no-nested-ternary: 2,
+        no-new: 2,
+        no-new-func: 2,
+        no-new-object: 2,
+        no-new-require: 2,
+        no-new-wrappers: 2,
+        no-octal-escape: 2,
+        no-path-concat: 2,
+        no-proto: 2,
+        no-restricted-globals: 2,
+        no-restricted-imports: 2,
+        no-restricted-modules: 2,
+        no-restricted-properties: 2,
+        no-restricted-syntax: 2,
+        no-return-assign: 2,
+        no-return-await: 2,
+        no-script-url: 2,
+        no-self-compare: 2,
+        no-sequences: 2,
+        no-shadow-restricted-names: 2,
+        no-spaced-func: 2,
+        no-tabs: 2,
+        no-template-curly-in-string: 2,
+        no-throw-literal: 2,
+        no-trailing-spaces: 2,
+        no-undef-init: 2,
+        no-undefined: 2,
+        no-unmodified-loop-condition: 2,
+        no-unneeded-ternary: 2,
+        no-unused-expressions: 2,
+        no-useless-call: 2,
+        no-useless-computed-key: 2,
+        no-useless-concat: 2,
+        no-useless-constructor: 2,
+        no-useless-rename: 2,
+        no-useless-return: 2,
+        no-var: 2,
+        no-void: 2,
+        no-whitespace-before-property: 2,
+        no-with: 2,
+        nonblock-statement-body-position: 2,
+        object-property-newline: 2,
+        object-shorthand: 2,
+        one-var-declaration-per-line: 2,
+        operator-assignment: 2,
+        operator-linebreak: 2,
+        padding-line-between-statements: 2,
+        prefer-arrow-callback: 2,
+        prefer-const: 2,
+        prefer-destructuring: 2,
+        prefer-numeric-literals: 2,
+        prefer-promise-reject-errors: 2,
+        prefer-reflect: 2,
+        prefer-rest-params: 2,
+        prefer-spread: 2,
+        prefer-template: 2,
+        quotes: 2,
+        radix: 2,
+        require-await: 2,
+        rest-spread-spacing: 2,
+        semi: 2,
+        semi-spacing: 2,
+        semi-style: 2,
+        sort-vars: 2,
+        space-before-blocks: 2,
+        space-in-parens: 2,
+        space-infix-ops: 2,
+        space-unary-ops: 2,
+        spaced-comment: [
+            2,
+            always
+        ],
+        switch-colon-spacing: 2,
+        symbol-description: 2,
+        template-curly-spacing: 2,
+        template-tag-spacing: 2,
+        unicode-bom: [
+            2,
+            never
+        ],
+        valid-jsdoc: 2,
+        vars-on-top: 2,
+        wrap-iife: 2,
+        wrap-regex: 2,
+        yield-star-spacing: 2,
+        yoda: 2,
+
+        /* Customize */
+        no-ternary: 0, // good way to define conditional values, isn't it?
+        indent-legacy: [2, 2], // 2 spaces
+        indent: [2, 2], // 2 spaces
+        sort-keys: 0, // we don't need waste the time with sort of hemorrhoid
+        no-process-env: 0, // good idea, but not for young project
+        sort-imports: 0, // prefer to sort by absolute/relative
+        capitalized-comments: 0, // how about commented code?
+        func-style: 0, // do not complicate your life
+        require-jsdoc: 0, // jsdoc? rly?
+        no-console: [1, {
+          allow: [warn]
+        }], // console.log best way to development, but prefer to keep only warn
+        id-length: [1, {
+          min: 0, // e, i
+          max: 42 // let names talking about self
+        }],
+        func-names: 0, // not for node.js, when we see line:column
+        no-multi-spaces: 0, // tightness - bored, multi spaces - expressive
+        arrow-parens: [2, as-needed],
+        no-use-before-define: 0, // How abount func, dependent from each other?
+        no-magic-numbers: 0, // Magic is might!
+        no-plusplus: 0, // plusplus is useful with for iterators
+        strict: 0, // no need strict today
+        padded-blocks: [2, never], // ugly
+        space-before-function-paren: 0, // ugly
+        one-var: 0, // useless
+        no-shadow: 0, // I prefer to use clear short names, which are not many
+        object-curly-newline: [2, {
+          minProperties: 1
+        }], // less ugly
+        object-curly-spacing: [2, always], // no specing for empty object
+        global-require: 0, // I write server side code
+        lines-around-comment: 0, // How about first comment in a block?
+        dot-location: [2, property], // Dot before property
+        quote-props: 0, // Javascript is not JSON
+        max-len: [2, {
+          code: 120, // Just like my IDE limit
+          comments: 80
+        }],
+        no-warning-comments: 0, // No matter
+        multiline-ternary: [2, always-multiline],
+        no-extra-parens: [2, all, { enforceForArrowConditionals: false }],
+        no-confusing-arrow: [2, {allowParens: true}],
+        callback-return: 0, // sometimes just need force flow
+        no-sync: 0, // Why not? I didn't write server
+        consistent-return: 0, // How about sideeffects?
+        array-bracket-spacing: [2, always, { singleValue: true }],
+        init-declarations: 0, // Javascript allows to assign veriables everywere
+        no-invalid-this: 0, // How about call in context?
+        no-param-reassign: 0, // Why not?
+        no-prototype-builtins: 0, // I'm sure about what I'm doing with objects
+        no-catch-shadow: 0, // I don't need support IE 8 and earlier
+        array-callback-return: 0, // But a can exit process or drop an error
+        no-process-exit: 0, // For CLI apps,
+        no-underscore-dangle: 0, // stream._transform?
+    }
+}

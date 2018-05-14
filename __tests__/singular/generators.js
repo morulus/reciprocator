@@ -1,4 +1,4 @@
-import singular from "./../lib/singular";
+import { legacy } from "./../../lib/";
 
 function* subSequencies() {
   yield 5;
@@ -13,7 +13,7 @@ describe('Test sub generators', () => {
       let b = yield subSequencies;
       yield a + b;
     }
-    return singular(testSequence)
+    return legacy(testSequence)
     .then(function(v) {
       expect(v).toBe(8);
     });

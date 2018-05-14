@@ -1,4 +1,4 @@
-import singular from "./../lib/singular";
+import { legacy } from "./../../lib/";
 
 function* subChain() {
   let a = yield new Promise(function(r) {
@@ -16,7 +16,7 @@ describe('Deep chain', () => {
       let a = yield subChain;
       yield a + 3;
     }
-    return singular(testChain)
+    return legacy(testChain)
     .then(function(v) {
       expect(v).toBe(20);
     });

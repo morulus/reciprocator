@@ -1,4 +1,4 @@
-import singular from "./../lib/singular";
+import { legacy } from "./../../lib/";
 
 describe('Simple chain', () => {
   it ('Must return last yielded value', () => {
@@ -7,7 +7,7 @@ describe('Simple chain', () => {
       yield 'B';
       yield 'C';
     }
-    return singular(testChain)
+    return legacy(testChain)
     .then(function(v) {
       expect(v).toBe('C');
     });
@@ -20,7 +20,7 @@ describe('Simple chain', () => {
       let c = yield Promise.resolve(100);
       yield a + b + c;
     }
-    return singular(testPromiseChain)
+    return legacy(testPromiseChain)
     .then(function(v) {
       expect(v).toBe(111);
     });
@@ -34,7 +34,7 @@ describe('Simple chain', () => {
       throw new Error("Oups");
       yield a + b + c;
     }
-    return singular(testPromiseChainWithError)
+    return legacy(testPromiseChainWithError)
     .catch(function(e) {
       expect(e.message).toBe("Oups");
     });
@@ -48,7 +48,7 @@ describe('Simple chain', () => {
       throw new Error("Oups");
       yield a + b + c;
     }
-    return singular(testPromiseChainWithError)
+    return legacy(testPromiseChainWithError)
     .catch(function(e) {
       expect(e.message).toBe("Oups");
     });
