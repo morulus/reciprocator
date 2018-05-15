@@ -1,4 +1,4 @@
-import Reciprocator from "./../../lib";
+import { run, apply } from "./../../lib";
 
 describe('Simple chain', () => {
   it ('Sync', () => {
@@ -6,7 +6,7 @@ describe('Simple chain', () => {
       return a + b + c;
     })
 
-    const promise = Reciprocator.run(flow, [1, 2, 3])
+    const promise = run(flow, [1, 2, 3])
     .then((result) => {
       expect(result).toBe(6);
     });
@@ -21,7 +21,7 @@ describe('Simple chain', () => {
       return Promise.resolve(a + b + c);
     })
 
-    const promise = Reciprocator.run(flow, [1, 2, 3])
+    const promise = run(flow, [1, 2, 3])
     .then((result) => {
       expect(result).toBe(6);
     });
@@ -51,7 +51,7 @@ describe('Simple chain', () => {
 
     const context = {};
 
-    return Reciprocator.apply(flow, context, [5])
+    return apply(flow, context, [5])
     .then((result) => {
       expect(result).toBe(10);
     })

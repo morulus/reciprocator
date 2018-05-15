@@ -8,6 +8,7 @@ const isError = require("is-error");
 
 const {
   PAYLOAD,
+  RETURN_PAYLOAD,
   CANCEL,
   CANCELLED
 } = require("./constants");
@@ -40,6 +41,10 @@ module.exports = function run(next, args, previousNext) {
     try {
       const result = Reflect.apply(next, this, args);
 
+      /* That function was just a final result factory */
+      if (next[RETURN_PAYLOAD]) {
+        return result;
+      }
 
       return Reflect.apply(run, this, [
         result,
@@ -190,3 +195,8 @@ module.exports = function run(next, args, previousNext) {
     return Promise.resolve(next);
   }
 };
+
+module.exports.PAYLOAD = PAYLOAD;
+module.exports.RETURN_PAYLOAD = RETURN_PAYLOAD;
+module.exports.CANCELLED = CANCELLED;
+module.exports.CANCELLED = CANCELLED;
