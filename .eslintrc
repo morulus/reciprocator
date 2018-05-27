@@ -184,7 +184,6 @@
             2,
             never
         ],
-        valid-jsdoc: 2,
         vars-on-top: 2,
         wrap-iife: 2,
         wrap-regex: 2,
@@ -247,5 +246,6 @@
         array-callback-return: 0, // But a can exit process or drop an error
         no-process-exit: 0, // For CLI apps,
         no-underscore-dangle: 0, // stream._transform?
+        valid-jsdoc: 0 // Non-strict jsdoc
     }
 }

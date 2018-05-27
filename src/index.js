@@ -1,8 +1,17 @@
 const defaults = require("lodash.defaults");
+const isGenerator = require("is-generator");
+const isFunction = require("is-function");
+const isPromise = require("is-promise");
 const run = require("./run");
 const legacy = require("./legacy");
 
-export const apply = (task, context, args) => Reflect.apply(run, context, [
+function resolveContext(context) {
+  return typeof context === "function"
+    ? context(this)
+    : context;
+}
+
+export const apply = (task, context, args) => Reflect.apply(run, context || null, [
   task,
   args
 ]);
@@ -23,9 +32,18 @@ export const createChild = function createChild(
   ownArgs
 ) {
   return function withBoundedChildContext(...args) {
-    const childContext = Object.create(this);
+    const childContext = Object.create(this || null);
 
-    Object.assign(childContext, initialChildContext);
+    Object.assign(childContext, Reflect.apply(
+      resolveContext,
+
+      /*
+       * When child context build by function, by default should use empty
+       * object, not null as other cases does
+       */
+      this || {},
+      [ initialChildContext ]
+    ));
 
     return Reflect.apply(run, childContext, [
       task,
@@ -48,10 +66,78 @@ const Reciprocator = {
   legacy
 };
 
+/* Wrap value, which will be returned as result no matter its type */
+function payload(value) {
+  if (isPromise(value)) {
+    const promiseFactory = function promiseFactory() {
+      return value;
+    };
+
+    promiseFactory[run.PAYLOAD] = "invoke";
+
+    return promiseFactory;
+  }
+  if (isGenerator(value) || isFunction(value)) {
+    value[run.PAYLOAD] = true;
+  }
+
+  return value;
+}
+
 export const effects = {
-  /* Get current context */
+  /*
+   * Get current context
+   * @derecated
+   */
   context: function getContext() {
+    throw new Error("Deprecated");
+  },
+
+  /* Get current context */
+  getContext: () => function getContext() {
     return this;
+  },
+
+
+  /**
+   * @deprecated Because spawn named just as common node.js function for
+   * creating child processes. To prevent collisions function name has changed
+   * to evolve.
+   */
+  spawn(task, context, args) {
+    console.warn("Spawn is deprecated, use evolve");
+
+    return function spawnChildFlow() {
+      const childContext = Object.create(this || null);
+
+      Object.assign(childContext, resolveContext(context));
+
+      return apply(task, childContext, args);
+    };
+  },
+
+  /* Apply function with child context */
+  evolve(task, context, args) {
+    return function applyChildFlow() {
+      const childContext = Object.create(this || null);
+
+      Object.assign(childContext, resolveContext(context));
+
+      return apply(task, childContext, args);
+    };
+  },
+
+  /* Fork child flow */
+  fork(task, context, args) {
+    return function forkChildFlow() {
+      const childContext = Object.create(this);
+
+      Object.assign(childContext, resolveContext(context));
+
+      const flow = apply(task, childContext, args);
+
+      return payload(flow);
+    };
   },
 
   /* Specify default context properties */
@@ -92,21 +178,9 @@ export const effects = {
       }
     };
   },
-
-  /* Wrap value, which will be returned as result no matter its type */
-  payload: function payload(fn) {
-    /*
-     * TODO: validation
-     *
-     */
-    function payloaded() {
-      return fn;
-    }
-
-    payloaded[run.RETURN_PAYLOAD] = true;
-
-    return payloaded;
-  }
+  payload
 };
+
+Reciprocator.effects = effects;
 
 export default Reciprocator;

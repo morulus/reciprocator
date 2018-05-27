@@ -1,4 +1,4 @@
-Reciprocator
+Reciprocator v.1.0.0-beta
 ==
 
-Function's runner, which invoke every returned function/generator and promise, until another type of value won't be returned
+Es generator based flow controller.

@@ -1,4 +1,4 @@
-import { run, apply } from "./../../lib";
+import { run, apply } from "./../../src";
 
 describe('Simple chain', () => {
   it ('Sync', () => {

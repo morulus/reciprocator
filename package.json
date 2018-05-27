@@ -1,8 +1,8 @@
 {
   "name": "reciprocator",
-  "version": "1.0.0-beta.0",
-  "description": "Async flow runner",
-  "main": "index.js",
+  "version": "1.0.0-beta",
+  "description": "Generator based flow runner",
+  "main": "lib/index.js",
   "scripts": {
     "test": "jest",
     "build": "babel src -d lib",
@@ -30,6 +30,7 @@
     "is-function": "^1.0.1",
     "is-generator": "^1.0.3",
     "is-object": "^1.0.1",
+    "is-object-like": "^1.0.1",
     "is-promise": "^2.1.0",
     "lodash.defaults": "^4.2.0"
   },

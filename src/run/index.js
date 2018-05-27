@@ -4,11 +4,11 @@ const isGenerator = require("is-generator");
 const isFunction = require("is-function");
 const isPromise = require("is-promise");
 const isObject = require("is-object");
+const isObjectLike = require("is-object-like");
 const isError = require("is-error");
 
 const {
   PAYLOAD,
-  RETURN_PAYLOAD,
   CANCEL,
   CANCELLED
 } = require("./constants");
@@ -17,19 +17,39 @@ function isGeneratorResultLike(next) {
   return next.hasOwnProperty("value") && next.hasOwnProperty("done") && typeof next.done === "boolean";
 }
 
+function extractPayload(value) {
+  if (isObjectLike(value) && value[PAYLOAD]) {
+    if (value[PAYLOAD] === "invoke") {
+      return value();
+    }
+    Reflect.deleteProperty(value, PAYLOAD);
+
+    return value;
+  }
+
+  return value;
+}
+
 module.exports = function run(next, args, previousNext) {
   if (typeof args === "undefined") {
     args = [];
   }
+
+  // TODO: add object like
+  if (typeof this !== "object" && typeof this !== "undefined") {
+    throw new Error(`Context should be an object or undefined. ${typeof this} given`);
+  }
+
+  /* Reduce context */
+  const context = this || null;
 
   /*
    * Handles situation when result is a function as is, not a next part of the
    * flow. Thus if you prefer to return function as final paylaod, you must to
    * define [PAYLOAD] static property, to prevent execution in the flow
    */
-  if (next && next[PAYLOAD]) {
-    Reflect.deleteProperty(next, PAYLOAD);
 
+  if (next && next[PAYLOAD]) {
     return Promise.resolve(next);
   }
 
@@ -39,14 +59,16 @@ module.exports = function run(next, args, previousNext) {
    */
   if (isFunction(next)) {
     try {
-      const result = Reflect.apply(next, this, args);
+      const result = Reflect.apply(next, context, args);
 
       /* That function was just a final result factory */
-      if (next[RETURN_PAYLOAD]) {
-        return result;
-      }
+      /*
+       * if (next[RETURN_PAYLOAD]) {
+       *   return Promise.resolve(result);
+       * }
+       */
 
-      return Reflect.apply(run, this, [
+      return Reflect.apply(run, context, [
         result,
         args
       ]);
@@ -66,11 +88,15 @@ module.exports = function run(next, args, previousNext) {
        * and after it next value should be getted
        */
       if (!next.done) {
-        return Reflect.apply(run, this, [
+        return Reflect.apply(run, context, [
           next.value,
           args
         ])
-          .then(value => {
+          .then(rawValue => {
+            /* Extract payload */
+            debugger; // eslint-disable-line
+            const value = extractPayload(rawValue);
+
             try {
             /* In this case next is just a generator result, ??? */
               if (previousNext.hasOwnProperty(CANCELLED)) {
@@ -89,10 +115,10 @@ module.exports = function run(next, args, previousNext) {
                */
 
               if (nextValue.done && typeof nextValue.value === "undefined") {
-                return Promise.resolve(value);
+                return Promise.resolve(rawValue);
               }
 
-              return Reflect.apply(run, this, [
+              return Reflect.apply(run, context, [
                 nextValue,
                 args,
                 previousNext
@@ -118,7 +144,7 @@ module.exports = function run(next, args, previousNext) {
               const nextValue = previousNext.throw(error);
 
               /* Run next unit, provided by catch block */
-              return Reflect.apply(run, this, [
+              return Reflect.apply(run, context, [
                 nextValue,
                 args,
                 previousNext
@@ -137,7 +163,7 @@ module.exports = function run(next, args, previousNext) {
       /* If generator done */
       }
 
-      return Reflect.apply(run, this, [
+      return Reflect.apply(run, context, [
         next.value,
         args
       ]);
@@ -145,7 +171,7 @@ module.exports = function run(next, args, previousNext) {
       // Means it is generator
       try {
         const value = next.next();
-        const wrap = Reflect.apply(run, this, [
+        const wrap = Reflect.apply(run, context, [
           value,
           args,
           next
@@ -161,18 +187,18 @@ module.exports = function run(next, args, previousNext) {
       }
     } else if (isPromise(next)) {
       let cancel;
-      const wrap = new Promise(function(resolve, reject) {
+      const wrap = new Promise((resolve, reject) => {
         cancel = resolve;
         next
           .then(next => {
-            Reflect.apply(run, this, [
+            Reflect.apply(run, context, [
               next,
               args
             ])
               .then(resolve)
               .catch(reject);
           }).catch(err => {
-            Reflect.apply(run, this, [
+            Reflect.apply(run, context, [
               err instanceof Error ? err : new Error(err),
               args
             ])
@@ -186,6 +212,10 @@ module.exports = function run(next, args, previousNext) {
       return wrap;
     } else if (isError(next)) {
       return Promise.reject(next);
+
+    /* Unexecutable payload */
+    } else if (next[PAYLOAD]) {
+      return Promise.resolve(next.value);
     } else {
       // Returns plain object
       return Promise.resolve(next);
@@ -197,6 +227,6 @@ module.exports = function run(next, args, previousNext) {
 };
 
 module.exports.PAYLOAD = PAYLOAD;
-module.exports.RETURN_PAYLOAD = RETURN_PAYLOAD;
+// module.exports.RETURN_PAYLOAD = RETURN_PAYLOAD;
 module.exports.CANCELLED = CANCELLED;
 module.exports.CANCELLED = CANCELLED;
